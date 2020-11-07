@@ -12,31 +12,22 @@ public class King extends BaseFigure {
     public Iterable<Position> getPossiblePositions() {
         List<Position> positions = new ArrayList<>();
 
-        int x;
-        int y;
-
-        x = getPosition().getX() - 1;
-        y = getPosition().getY();
-
-        if(x >= Board.MIN_FIELD_VALUE && x <= Board.MAX_FIELD_VALUE
-        && y >= Board.MIN_FIELD_VALUE && y <= Board.MAX_FIELD_VALUE) {
-            positions.add(new Position(x, y));
-        }
-
-        x = getPosition().getX() + 1;
-        y = getPosition().getY();
-
-        if(x >= Board.MIN_FIELD_VALUE && x <= Board.MAX_FIELD_VALUE
-                && y >= Board.MIN_FIELD_VALUE && y <= Board.MAX_FIELD_VALUE) {
-            positions.add(new Position(x, y));
-        }
+        checkAndAddPosition(positions, getPosition().getX() - 1, getPosition().getY());
+        checkAndAddPosition(positions, getPosition().getX() + 1, getPosition().getY());
 
         for (int i = getPosition().getX()-1; i <= getPosition().getX()+1; i++) {
-            positions.add(new Position(i, getPosition().getY()-1));
-            positions.add(new Position(i, getPosition().getY()+1));
+            checkAndAddPosition(positions, i, getPosition().getY()-1);
+            checkAndAddPosition(positions, i, getPosition().getY()+1);
         }
 
         return positions;
+    }
+
+    private void checkAndAddPosition(List<Position> positions, int x, int y) {
+        if (x >= Board.MIN_FIELD_VALUE && x <= Board.MAX_FIELD_VALUE
+                && y >= Board.MIN_FIELD_VALUE && y <= Board.MAX_FIELD_VALUE) {
+            positions.add(new Position(x, y));
+        }
     }
 
 }
